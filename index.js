@@ -1,13 +1,11 @@
 const express = require("express");
-const mongoose= require('mongoose')
+const mongoose = require("mongoose");
 const genres = require("./src/routes/genres");
 const customers = require("./src/routes/customers");
 const app = express();
 
 mongoose
-  .connect(
-    "mongodb+srv://mframirezfuentes:C5EVGzPcYJ40cfAq@cluster0.y0lcmo9.mongodb.net/genres"
-  )
+  .connect(process.env.URI)
   .then(() => console.log("Connected to mongodb"))
   .catch((err) => console.error("Could not to connect to mongdb", err));
 
