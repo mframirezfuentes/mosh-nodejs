@@ -92,4 +92,7 @@ const updateCourse = async (id) => {
   console.log(result);
 };
 
-//updateCourse('6500acaa90a2583e091b1e11');
+const listCourses = async () => {
+  const courses = Course.find().select("name");
+  console.log(courses);
+};
