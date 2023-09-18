@@ -1,8 +1,6 @@
-
 const express = require("express");
 const router = express.Router();
-const Customer = require("../models/customer");
-const validateCustomer= require("../models/customer")
+const {Customer, validateCustomer} = require("../models/customer");
 
 router.get("/", async (req, res) => {
   const customers = await Customer.find().sort("name");
@@ -50,7 +48,5 @@ router.delete("/:id", async (req, res) => {
 
   res.send(customer);
 });
-
-
 
 module.exports = router;

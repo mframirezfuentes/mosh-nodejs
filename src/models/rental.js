@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
+const { Movies } = require("./movies");
 
 const Rental = mongoose.model(
   "Rental",
@@ -25,7 +26,7 @@ const Rental = mongoose.model(
       }),
       required: true,
     },
-    movies: {
+    movie: {
       type: new mongoose.Schema({
         title: {
           type: String,
@@ -58,7 +59,9 @@ const Rental = mongoose.model(
   })
 );
 
-const validationRental = (rental) => {
+const validationRental = async (rental) => {
+  const movie = await Movies.findById(rental.movieId);
+  console.log("rental: ", movie);
   const schema = Joi.object({
     customerId: Joi.string().required(),
     movieId: Joi.string().required(),

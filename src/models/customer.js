@@ -12,7 +12,7 @@ const Customer = mongoose.model(
 
 const validateCustomer = (customer) => {
   const schema = Joi.object({
-    isGold: Joi.boolean(),
+    isGold: Joi.boolean().required(),
     name: Joi.string().min(5).max(50).required(),
     phone: Joi.string().min(5).max(50).required(),
   });
@@ -20,4 +20,4 @@ const validateCustomer = (customer) => {
   return schema.validate(customer);
 };
 
-module.exports = {Customer, validateCustomer}
+module.exports = { Customer, validateCustomer };
