@@ -9,6 +9,8 @@ const movies = require("./src/routes/movies");
 const genres = require("./src/routes/genres");
 const customers = require("./src/routes/customers");
 
+
+
 mongoose
   .connect(process.env.URL_MOVIES)
   .then(() => console.log("Mongodb connected"))

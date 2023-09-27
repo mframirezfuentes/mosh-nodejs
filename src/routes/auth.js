@@ -1,7 +1,9 @@
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
-const Joi= require('joi')
+const Joi = require("joi");
 const express = require("express");
+require("dotenv").config();
 const router = express.Router();
 const { User } = require("../models/users");
 
@@ -29,7 +31,9 @@ router.post("/", async (req, res) => {
   );
   if (!validatePasword)
     return res.status(400).send("Invalid eamil or password");
-  res.send(true);
+
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN);
+  res.send(token);
 });
 
 router.put("/:email", async (req, res) => {
