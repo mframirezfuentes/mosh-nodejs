@@ -1,6 +1,8 @@
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
 const express = require("express");
+require("dotenv").config();
 const router = express.Router();
 const { User, validateUsers } = require("../models/users");
 
@@ -25,9 +27,14 @@ router.post("/", async (req, res) => {
   user = new User(_.pick(req.body, ["name", "email", "password"]));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
-
   await user.save();
-  res.status(201).send(_.pick(user, ["_id", "name", "email"]));
+
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_TOKEN);
+
+  res
+    .header("x-auth-token", token)
+    .status(201)
+    .send(_.pick(user, ["_id", "name", "email"]));
 });
 
 router.put("/:email", async (req, res) => {
