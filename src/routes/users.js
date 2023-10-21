@@ -1,9 +1,15 @@
+const auth = require("../middleware/auth");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
 const express = require("express");
 require("dotenv").config();
 const router = express.Router();
 const { User, validateUsers } = require("../models/users");
+
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+  res.send(user);
+});
 
 router.get("/", async (req, res) => {
   const users = await User.find().sort("name");
@@ -28,7 +34,7 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
-  const token = user.generateAuthToken()
+  const token = user.generateAuthToken();
 
   res
     .header("x-auth-token", token)
