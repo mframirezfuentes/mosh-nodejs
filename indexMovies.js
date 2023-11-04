@@ -1,5 +1,6 @@
 const express = require("express");
-require('express-async-errors');
+require("express-async-errors");
+const winston = require("winston");
 const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -10,6 +11,8 @@ const movies = require("./src/routes/movies");
 const genres = require("./src/routes/genres");
 const customers = require("./src/routes/customers");
 const error = require("./src/middleware/error");
+
+winston.add(new winston.transports.File({ filename: "logfile.log" }));
 
 mongoose
   .connect(process.env.URL_MOVIES)
@@ -25,7 +28,7 @@ app.use("/api/v1/movies", movies);
 app.use("/api/v1/customers", customers);
 app.use("/api/v1/genres", genres);
 app.use(error);
-app.use
+app.use;
 
 const port = process.env.PORT || 3000;
 
