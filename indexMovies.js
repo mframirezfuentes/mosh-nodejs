@@ -8,8 +8,7 @@ const rental = require("./src/routes/rental");
 const movies = require("./src/routes/movies");
 const genres = require("./src/routes/genres");
 const customers = require("./src/routes/customers");
-
-
+const error = require("./src/middleware/error");
 
 mongoose
   .connect(process.env.URL_MOVIES)
@@ -24,6 +23,8 @@ app.use("/api/v1/rentals", rental);
 app.use("/api/v1/movies", movies);
 app.use("/api/v1/customers", customers);
 app.use("/api/v1/genres", genres);
+app.use(error);
+app.use
 
 const port = process.env.PORT || 3000;
 
