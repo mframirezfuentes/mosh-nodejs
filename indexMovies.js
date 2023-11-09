@@ -1,6 +1,7 @@
 const express = require("express");
 require("express-async-errors");
 const winston = require("winston");
+require('winston-mongodb')
 const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -13,6 +14,7 @@ const customers = require("./src/routes/customers");
 const error = require("./src/middleware/error");
 
 winston.add(new winston.transports.File({ filename: "logfile.log" }));
+winston.add(new winston.transports.MongoDB({db: 'mongodb://localhost/movies'}))
 
 mongoose
   .connect(process.env.URL_MOVIES)
